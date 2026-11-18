@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Snap Smart – Sistema de gestão</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#090b12;--pn:#121624;--ln:#232a3f;--tx:#eef1f9;--mu:#8e98b3;--az:#2f6bff;--ok:#2fd08a;--rd:#ff6b78;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme=dark]){--bg:#f1f4fb;--pn:#fff;--ln:#dbe1ef;--tx:#0e1220;--mu:#5a6482;--ok:#0f9d63;--rd:#d63a4a;color-scheme:light}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 15px/1.5 Sora,system-ui,sans-serif;min-height:100vh}
+.w{max-width:980px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+header img{width:56px;height:56px;border-radius:50%;flex:none}
+h1{font-size:24px;font-weight:800;margin:0;letter-spacing:-.5px}
+header small{color:var(--mu)}
+.dm{margin-left:auto;background:var(--az);color:#fff;font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px}
+nav{display:flex;gap:8px;overflow-x:auto;margin-bottom:16px;padding-bottom:4px}
+nav button{flex:none;background:var(--pn);color:var(--mu);border:1px solid var(--ln);border-radius:10px;padding:10px 16px;font:600 14px Sora,system-ui,sans-serif;cursor:pointer}
+nav button.on{background:var(--az);border-color:var(--az);color:#fff}
+.c{background:var(--pn);border:1px solid var(--ln);border-radius:14px;padding:16px;margin-bottom:14px}
+.c h2{font-size:16px;margin:0 0 12px}
+.st{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.st div{background:var(--pn);border:1px solid var(--ln);border-radius:12px;padding:12px 14px}
+.st b{display:block;font-size:22px;font-weight:800}.st span{color:var(--mu);font-size:13px}
+.fm{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
+label{display:block;font-size:13px;color:var(--mu);margin-bottom:4px}
+input,select{width:100%;background:var(--bg);color:var(--tx);border:1px solid var(--ln);border-radius:10px;padding:10px;font:400 15px Sora,system-ui,sans-serif}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--az);outline-offset:2px}
+.b{background:var(--az);color:#fff;border:0;border-radius:10px;padding:11px 18px;font:600 15px Sora,system-ui,sans-serif;cursor:pointer}
+.b:disabled{opacity:.4;cursor:not-allowed}
+.tb{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--ln);white-space:nowrap}
+th{color:var(--mu);font-weight:600;font-size:13px}
+.t{color:var(--mu);font-size:13px}
+.ok{background:color-mix(in srgb,var(--ok) 15%,transparent);color:var(--ok);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-weight:600}
+.er{background:color-mix(in srgb,var(--rd) 15%,transparent);color:var(--rd);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-weight:600}
+.nt{border-left:3px solid var(--az);padding:8px 12px;color:var(--mu);margin-bottom:14px;font-size:14px}
+.tot{font-size:26px;font-weight:800;margin:12px 0}
+.tg{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;background:color-mix(in srgb,var(--az) 22%,transparent);color:var(--az)}
+.in{color:var(--ok)}.out{color:var(--rd)}
+#ch{height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:4px 0}
+.m{max-width:82%;padding:9px 13px;border-radius:14px;font-size:14px}
+.m.u{align-self:flex-end;background:var(--az);color:#fff;border-bottom-right-radius:4px}
+.m.b{align-self:flex-start;background:var(--bg);border:1px solid var(--ln);border-bottom-left-radius:4px}
+.ch{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.ch button{background:transparent;color:var(--tx);border:1px solid var(--ln);border-radius:99px;padding:6px 12px;font:400 13px Sora,system-ui,sans-serif;cursor:pointer}
+.sd{display:flex;gap:8px}
+@media(prefers-reduced-motion:no-preference){.ok{animation:f .3s}@keyframes f{from{opacity:0;transform:translateY(-4px)}}}
+</style></head><body><div class="w">
+<header><img src="data:image/png;base64,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" alt="Snap Smart"><div><h1>Snap Smart</h1><small>Sistema de gestão da loja</small></div><span class="dm">Demonstração</span></header>
+<nav id="nv"></nav><main id="mn"></main></div>
+<script>
+const R=v=>'R$ '+(+v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const $=s=>document.querySelector(s);
+const E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let k=0;const im=()=>'3569'+String(++k*7919).padStart(11,'0');
+let T='est',msg='',err='',vp=0,vc='';
+const P=[{n:'iPhone 15 128 GB',p:4299,ims:[im(),im(),im()]},{n:'Galaxy S24 256 GB',p:3899,ims:[im(),im()]},{n:'Redmi Note 13',p:1399,ims:[im(),im(),im(),im(),im(),im()]},{n:'Moto G54',p:1199,ims:[im(),im(),im(),im()]},{n:'Capa transparente iPhone 15',c:'Capas',p:49,q:12},{n:'Capa antichoque Galaxy S24',c:'Capas',p:59,q:8},{n:'Película de vidro 3D',c:'Películas',p:39,q:20},{n:'Película de hidrogel',c:'Películas',p:29,q:15},{n:'Caixa de som Bluetooth',c:'Som',p:149,q:6},{n:'Fone Bluetooth',c:'Som',p:129,q:8},{n:'Suporte veicular magnético',c:'Suportes',p:59,q:10},{n:'Suporte de mesa articulado',c:'Suportes',p:45,q:7},{n:'Carregador 20W USB-C',c:'Carregadores',p:79,q:15},{n:'Cabo USB-C 1 m',c:'Carregadores',p:29,q:25}];
+let AF='Todos';
+let MV=[],VN=[],NF=[],C=[{w:'b',t:'Olá! Eu sou o atendimento da Snap Smart. Como posso ajudar?'}];
+const qt=p=>p.ims?p.ims.length:p.q;
+const hr=()=>new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+const mv=(t,i,d)=>MV.unshift({h:hr(),t,i,d});
+function r(){
+ $('#nv').innerHTML=[['est','Estoque'],['ac','Acessórios'],['ven','Vendas'],['nf','Notas fiscais'+(NF.length?' ('+NF.length+')':'')],['ia','Atendimento IA']].map(([a,l])=>`<button class="${T==a?'on':''}" onclick="T='${a}';r()">${l}</button>`).join('');
+ $('#mn').innerHTML=(msg?`<div class="ok">${msg}</div>`:'')+(err?`<div class="er">${err}</div>`:'')+({est,ac,ven,nf,ia})[T]();
+ msg=err='';if(T=='ia')cd();
+}
+function est(){
+ const un=P.reduce((a,p)=>a+qt(p),0),vl=P.reduce((a,p)=>a+qt(p)*p.p,0);
+ return `<div class="st"><div><b>${un}</b><span>itens em estoque</span></div><div><b>${R(vl)}</b><span>valor em estoque</span></div><div><b>${VN.length}</b><span>vendas feitas</span></div></div>
+<div class="c"><h2>Registrar entrada</h2><div class="fm"><div><label>Produto</label><input id="en" list="pl" placeholder="Ex.: iPhone 15 128 GB"><datalist id="pl">${P.map(p=>`<option value="${E(p.n)}">`).join('')}</datalist></div><div><label>Preço de venda</label><input id="ep" type="number" min="0" placeholder="0,00"></div><div><label>IMEI (aparelhos)</label><input id="ei" inputmode="numeric" placeholder="15 dígitos"></div><div><label>Quantidade (acessórios)</label><input id="eq" type="number" min="1" value="1"></div><button class="b" onclick="ent()">Registrar entrada</button></div></div>
+<div class="c"><h2>Aparelhos</h2><div class="tb"><table><tr><th>Produto</th><th>Preço (editável)</th><th>Em estoque</th></tr>${P.map((p,i)=>!p.ims?'':`<tr><td>${E(p.n)}</td><td><input type='number' min='0' value='${p.p}' style='width:110px' onchange='edp(${i},this.value)'></td><td>${qt(p)==0?'<span class="out">Sem estoque</span>':qt(p)+' un.'}</td></tr>`).join('')}</table></div></div>
+<div class="c"><h2>Entradas e saídas</h2>${MV.length?`<div class="tb"><table><tr><th>Hora</th><th>Tipo</th><th>Produto</th><th>Detalhe</th></tr>${MV.slice(0,8).map(m=>`<tr><td class="t">${m.h}</td><td class="${m.t=='Entrada'?'in':'out'}">${m.t}</td><td>${E(m.i)}</td><td class="t">${E(m.d)}</td></tr>`).join('')}</table></div>`:'<p class="t">Nenhuma movimentação ainda. Registre uma entrada ou faça uma venda.</p>'}</div>`;
+}
+function ent(){
+ const n=$('#en').value.trim(),pr=+$('#ep').value,i=$('#ei').value.trim(),q=Math.max(1,+$('#eq').value||1);
+ if(!n){err='Informe o nome do produto.';return r()}
+ let p=P.find(x=>x.n.toLowerCase()==n.toLowerCase());
+ if(!p){p=i?{n,p:pr,ims:[]}:{n,p:pr,q:0,c:'Outros'};P.push(p)}else if(pr)p.p=pr;
+ if(p.ims){if(!i){err='Este aparelho precisa de IMEI.';return r()}p.ims.push(i);mv('Entrada',p.n,'IMEI '+i)}
+ else{p.q+=q;mv('Entrada',p.n,'+'+q+' un.')}
+ msg='Entrada registrada: '+E(p.n);r();
+}
+function cats(){return ['Todos',...new Set(P.filter(p=>!p.ims).map(p=>p.c||'Outros'))]}
+function setf(j){AF=cats()[j];r()}
+function ac(){
+ const cs=cats();if(!cs.includes(AF))AF='Todos';
+ const L=P.map((p,i)=>[p,i]).filter(([p])=>!p.ims&&(AF=='Todos'||(p.c||'Outros')==AF));
+ return `<div class='c'><h2>Adicionar acessório</h2><div class='fm'><div><label>Nome</label><input id='an' placeholder='Ex.: Capa antichoque iPhone 15'></div><div><label>Categoria</label><input id='ak' list='cl' placeholder='Capas, Som, Suportes…'><datalist id='cl'>${cs.slice(1).map(x=>`<option value='${E(x)}'>`).join('')}</datalist></div><div><label>Preço de venda</label><input id='ap' type='number' min='0' placeholder='0,00'></div><div><label>Quantidade</label><input id='aq' type='number' min='0' value='1'></div><button class='b' onclick='adda()'>Adicionar acessório</button></div></div>
+<div class='c'><h2>Acessórios</h2><div class='ch'>${cs.map((x,j)=>`<button onclick='setf(${j})' ${x==AF?`style='border-color:var(--az);color:var(--az)'`:''}>${E(x)}</button>`).join('')}</div>${L.length?`<div class='tb'><table><tr><th>Nome</th><th>Categoria</th><th>Preço</th><th>Qtd.</th><th></th></tr>${L.map(([p,i])=>`<tr><td><input value='${E(p.n)}' style='min-width:210px' onchange='edn(${i},this.value)'></td><td><input list='cl' value='${E(p.c||'Outros')}' style='width:130px' onchange='edc(${i},this.value)'></td><td><input type='number' min='0' value='${p.p}' style='width:100px' onchange='edp(${i},this.value)'></td><td><input type='number' min='0' value='${p.q}' style='width:80px' onchange='edq(${i},this.value)'></td><td><button class='b' style='padding:8px 12px;background:var(--rd)' onclick='rm(${i})'>Excluir</button></td></tr>`).join('')}</table></div>`:`<p class='t'>Nenhum acessório nesta categoria. Adicione um acima.</p>`}<p class='t'>Altere nome, categoria, preço ou quantidade direto na tabela.</p></div>`;
+}
+function edn(i,v){v=v.trim();if(!v){err='O nome não pode ficar vazio.';return r()}P[i].n=v;msg='Alteração salva';r()}
+function edc(i,v){P[i].c=v.trim()||'Outros';msg='Categoria atualizada';r()}
+function edp(i,v){P[i].p=Math.max(0,+v||0);msg='Preço atualizado';r()}
+function edq(i,v){P[i].q=Math.max(0,Math.floor(+v||0));msg='Quantidade atualizada';r()}
+function rm(i){const n=P[i].n;P.splice(i,1);vp=0;msg='Acessório removido: '+E(n);r()}
+function adda(){
+ const n=$('#an').value.trim(),c=$('#ak').value.trim()||'Outros',pr=Math.max(0,+$('#ap').value||0),q=Math.max(0,Math.floor(+$('#aq').value||0));
+ if(!n){err='Informe o nome do acessório.';return r()}
+ const x=P.find(y=>!y.ims&&y.n.toLowerCase()==n.toLowerCase());
+ if(x){x.q+=q;if(pr)x.p=pr}else P.push({n,c,p:pr,q});
+ if(q)mv('Entrada',n,'+'+q+' un.');
+ msg='Acessório salvo: '+E(n);r();
+}
+function ven(){
+ if(!P[vp]||qt(P[vp])==0){vp=Math.max(0,P.findIndex(p=>qt(p)>0))}
+ const p=P[vp],ok=p&&qt(p)>0;
+ return `<div class="c"><h2>Nova venda</h2><div class="fm"><div><label>Produto</label><select onchange="vp=+this.value;r()">${P.map((x,i)=>`<option value="${i}" ${i==vp?'selected':''} ${qt(x)==0?'disabled':''}>${E(x.n)} – ${R(x.p)}${qt(x)==0?' (sem estoque)':''}</option>`).join('')}</select></div>
+ <div>${ok&&p.ims?`<label>IMEI do aparelho</label><select id="vi">${p.ims.map(i=>`<option>${i}</option>`).join('')}</select>`:`<label>Quantidade</label><input id="vq" type="number" min="1" max="${ok?qt(p):1}" value="1" oninput="tt()">`}</div>
+ <div><label>Cliente</label><input id="vc" value="${E(vc)}" oninput="vc=this.value" placeholder="Nome do cliente"></div>
+ <div><label>Pagamento</label><select id="vg"><option>Pix</option><option>Débito</option><option>Crédito</option><option>Dinheiro</option></select></div></div>
+ <p><label style="display:flex;gap:8px;align-items:center;color:var(--tx)"><input id="vn" type="checkbox" checked style="width:auto"> Emitir nota fiscal</label></p>
+ <div class="tot" id="tt">${ok?R(p.p):'–'}</div><button class="b" onclick="sell()" ${ok?'':'disabled'}>Finalizar venda</button></div>
+ <div class="c"><h2>Últimas vendas</h2>${VN.length?`<div class="tb"><table><tr><th>Nº</th><th>Cliente</th><th>Produto</th><th>Total</th><th>Pagamento</th></tr>${VN.slice(0,6).map(v=>`<tr><td>${v.id}</td><td>${E(v.c)}</td><td>${E(v.i)}</td><td>${R(v.t)}</td><td class="t">${v.g}</td></tr>`).join('')}</table></div>`:'<p class="t">Nenhuma venda ainda. Finalize a primeira acima.</p>'}</div>`;
+}
+function tt(){const p=P[vp],q=+($('#vq')||{value:1}).value||1;$('#tt').textContent=R(p.p*q)}
+function sell(){
+ const p=P[vp];let q=1,i='';
+ if(p.ims){i=$('#vi').value;p.ims.splice(p.ims.indexOf(i),1)}
+ else{q=Math.max(1,+$('#vq').value||1);if(q>p.q){err='Só há '+p.q+' un. em estoque.';return r()}p.q-=q}
+ const v={id:VN.length+1,c:vc.trim()||'Consumidor',i:p.n,t:p.p*q,g:$('#vg').value};VN.unshift(v);
+ mv('Saída',p.n,q+' un. · venda '+v.id+(i?' · IMEI '+i:''));
+ msg='Venda '+v.id+' finalizada: '+R(v.t);
+ if($('#vn').checked){let kk='';for(let j=0;j<44;j++)kk+=Math.floor(Math.random()*10);NF.unshift({no:1000+NF.length+1,c:v.c,i:v.i,t:v.t,k:kk});msg+=' · nota fiscal '+NF[0].no+' emitida (simulada)'}
+ vc='';r();
+}
+function nf(){
+ return `<div class="nt">Demonstração: as notas abaixo são simuladas. Na versão definitiva, o sistema envia cada venda a um emissor autorizado pela Sefaz e guarda o XML e o PDF da nota.</div>
+ <div class="c"><h2>Notas emitidas</h2>${NF.length?`<div class="tb"><table><tr><th>Nº</th><th>Cliente</th><th>Produto</th><th>Total</th><th>Chave de acesso</th><th>Situação</th></tr>${NF.map(n=>`<tr><td>${n.no}</td><td>${E(n.c)}</td><td>${E(n.i)}</td><td>${R(n.t)}</td><td class="t">${n.k.slice(0,12)}…${n.k.slice(-6)}</td><td><span class="tg">Simulada</span></td></tr>`).join('')}</table></div>`:`<p class="t">Nenhuma nota ainda. Faça uma venda com “Emitir nota fiscal” marcado.</p><button class="b" onclick="T='ven';r()">Ir para Vendas</button>`}</div>`;
+}
+function ia(){
+ return `<div class="nt">Demonstração com respostas de exemplo. Na versão definitiva, o agente consulta o estoque real e atende pelo WhatsApp da loja.</div>
+ <div class="c"><div id="ch"></div><div class="ch">${['Tem iPhone 15?','Quanto custa o Redmi Note 13?','Vocês aceitam Pix?','Quero saber do meu conserto'].map(q=>`<button onclick="sd(this.textContent)">${q}</button>`).join('')}</div>
+ <div class="sd"><input id="ci" placeholder="Escreva uma mensagem" onkeydown="if(event.key=='Enter')sd()"><button class="b" onclick="sd()">Enviar</button></div></div>`;
+}
+function cd(){const c=$('#ch');if(!c)return;c.innerHTML=C.map(m=>`<div class="m ${m.w}">${E(m.t)}</div>`).join('');c.scrollTop=c.scrollHeight}
+function sd(t){t=(t||$('#ci').value).trim();if(!t)return;C.push({w:'u',t});$('#ci').value='';cd();setTimeout(()=>{C.push({w:'b',t:rs(t)});cd()},500)}
+function rs(t){
+ const n=t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+ const p=P.find(x=>x.n.toLowerCase().normalize('NFD').replace(/[^a-z0-9 ]/g,'').split(' ').some(w=>w.length>3&&w!='para'&&n.includes(w)));
+ if(p)return qt(p)>0?`Temos ${p.n} em estoque (${qt(p)} un.) por ${R(p.p)}. Quer que eu reserve para você retirar na loja?`:`No momento ${p.n} está em falta. Posso avisar você quando chegar.`;
+ if(/pix|cartao|parcel|pagamento|credito|debito/.test(n))return 'Aceitamos Pix, débito e crédito em até 12x. A nota fiscal é enviada por WhatsApp na hora da compra.';
+ if(/conserto|assistencia|tela|bateria|reparo/.test(n))return 'Me informe o número da sua ordem de serviço que eu consulto o andamento para você.';
+ if(/horario|aberto|funciona|endereco/.test(n))return 'Atendemos de segunda a sábado, das 9h às 18h.';
+ return 'Não tenho essa informação agora. Vou chamar um atendente da loja para continuar com você.';
+}
+r();
+</script></body></html>
